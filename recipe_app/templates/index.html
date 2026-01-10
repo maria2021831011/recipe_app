@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlavorVerse | Professional Recipe App</title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+   
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-utensils"></i> FlavorVerse
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#recipes">Recipes</a></li>
+                    <li><a href="#categories">Categories</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" id="loginBtn">Login</button>
+                    <button class="btn btn-primary" id="registerBtn">Sign Up</button>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Discover <span>Delicious</span> Recipes From Around The World</h1>
+                    <p>Join our community of food lovers and explore thousands of professional recipes, cooking tips, and culinary inspiration. From quick weekday meals to gourmet feasts.</p>
+                    <div class="hero-btns">
+                        <button class="btn btn-primary" id="exploreRecipes">Explore Recipes</button>
+                        <button class="btn btn-secondary" id="joinCommunityBtn">Join Community</button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Delicious pasta dish">
+                    <div class="image-overlay">
+                        <h3>Creamy Garlic Pasta</h3>
+                        <p>Ready in 25 minutes • 4.8 ★</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Recipes -->
+    <section class="recipes-section" id="recipes">
+        <div class="container">
+            <div class="section-title">
+                <h2>Featured Recipes</h2>
+                <p>Handpicked delicious recipes from our top chefs. Try them today!</p>
+            </div>
+            <div class="recipes-grid">
+                <!-- Recipe 1 -->
+                <div class="recipe-card">
+                    <div class="recipe-image">
+                        <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Grilled salmon with vegetables">
+                    </div>
+                    <div class="recipe-content">
+                        <h3>Grilled Salmon with Asparagus</h3>
+                        <div class="recipe-meta">
+                            <span><i class="far fa-clock"></i> 30 min</span>
+                            <span><i class="fas fa-user-friends"></i> 2 servings</span>
+                            <span><i class="fas fa-fire"></i> 420 cal</span>
+                        </div>
+                        <p>Healthy grilled salmon with lemon butter sauce and roasted asparagus. Perfect for a nutritious dinner.</p>
+                    </div>
+                </div>
+                
+                <!-- Recipe 2 -->
+                <div class="recipe-card">
+                    <div class="recipe-image">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Homemade pizza">
+                    </div>
+                    <div class="recipe-content">
+                        <h3>Homemade Margherita Pizza</h3>
+                        <div class="recipe-meta">
+                            <span><i class="far fa-clock"></i> 60 min</span>
+                            <span><i class="fas fa-user-friends"></i> 4 servings</span>
+                            <span><i class="fas fa-fire"></i> 680 cal</span>
+                        </div>
+                        <p>Classic Italian pizza with fresh mozzarella, basil, and tomato sauce on a homemade crust.</p>
+                    </div>
+                </div>
+                
+                <!-- Recipe 3 -->
+                <div class="recipe-card">
+                    <div class="recipe-image">
+                        <img src="https://images.unsplash.com/photo-1485921325833-c519f76c4927?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Chocolate cake">
+                    </div>
+                    <div class="recipe-content">
+                        <h3>Decadent Chocolate Cake</h3>
+                        <div class="recipe-meta">
+                            <span><i class="far fa-clock"></i> 90 min</span>
+                            <span><i class="fas fa-user-friends"></i> 8 servings</span>
+                            <span><i class="fas fa-fire"></i> 520 cal</span>
+                        </div>
+                        <p>Rich, moist chocolate cake with chocolate ganache frosting. A dessert lover's dream.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Auth Modal -->
+    <div class="auth-modal" id="authModal">
+        <button class="close-modal" id="closeModal">&times;</button>
+        <div class="auth-container">
+            <div class="auth-tabs">
+                <div class="auth-tab active" data-tab="login">Login</div>
+                <div class="auth-tab" data-tab="register">Register</div>
+                <div class="auth-tab" data-tab="forgot">Reset Password</div>
+            </div>
+            <div class="auth-form">
+                <!-- Login Form -->
+                <form id="loginForm" class="active">
+                    <div class="form-group">
+                        <label for="loginEmail">Email Address</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                    </div>
+                    <div class="form-options">
+                        <label>
+                            <input type="checkbox"> Remember me
+                        </label>
+                        <a href="#" class="forgot-link" data-tab="forgot">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                    <div class="form-footer">
+                        Don't have an account? <a href="#" class="switch-link" data-tab="register">Sign up</a>
+                    </div>
+                </form>
+                
+                <!-- Registration Form -->
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="registerName">Full Name</label>
+                        <input type="text" id="registerName" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email Address</label>
+                        <input type="email" id="registerEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" placeholder="Create a password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerConfirmPassword">Confirm Password</label>
+                        <input type="password" id="registerConfirmPassword" placeholder="Confirm your password" required>
+                    </div>
+                    <div class="form-options">
+                        <label>
+                            <input type="checkbox" required> I agree to the Terms & Conditions
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+                    <div class="form-footer">
+                        Already have an account? <a href="#" class="switch-link" data-tab="login">Login</a>
+                    </div>
+                </form>
+                
+                <!-- Forgot Password Form -->
+                <form id="forgotForm">
+                    <div class="form-group">
+                        <label for="forgotEmail">Email Address</label>
+                        <input type="email" id="forgotEmail" placeholder="Enter your email" required>
+                    </div>
+                    <p style="margin-bottom: 20px; color: var(--gray); font-size: 14px;">Enter your email address and we'll send you a link to reset your password.</p>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Reset Password</button>
+                    <div class="form-footer">
+                        Remember your password? <a href="#" class="switch-link" data-tab="login">Back to login</a>
+                    </div>
+                </form>
+                <!-- VERIFY + RESET FORM -->
+<form id="verifyForm" style="display:none;">
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="verifyEmail" required>
+    </div>
+
+    <div class="form-group">
+        <label>Reset Code</label>
+        <input type="text" id="resetCode" placeholder="6-digit code" required>
+    </div>
+
+    <div class="form-group">
+        <label>New Password</label>
+        <input type="password" id="newPassword" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="width:100%">
+        Reset Password
+    </button>
+</form>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Categories Section -->
+<section class="categories-section" id="categories">
+    <div class="container">
+        <div class="section-title">
+            <h2>Recipe Categories</h2>
+            <p>Explore recipes by category. Find your favorite type of cuisine!</p>
+        </div>
+        <div class="categories-grid">
+            <div class="category-card" style="background: linear-gradient(135deg, #FF9A9E 0%, #FAD0C4 100%);">
+                <i class="fas fa-utensils"></i>
+                <h3>Main Course</h3>
+                <p>250+ Recipes</p>
+            </div>
+            <div class="category-card" style="background: linear-gradient(135deg, #A1C4FD 0%, #C2E9FB 100%);">
+                <i class="fas fa-apple-alt"></i>
+                <h3>Vegetarian</h3>
+                <p>180+ Recipes</p>
+            </div>
+            <div class="category-card" style="background: linear-gradient(135deg, #FFECD2 0%, #FCB69F 100%);">
+                <i class="fas fa-seedling"></i>
+                <h3>Vegan</h3>
+                <p>120+ Recipes</p>
+            </div>
+            <div class="category-card" style="background: linear-gradient(135deg, #E6DADA 0%, #274046 100%);">
+                <i class="fas fa-drumstick-bite"></i>
+                <h3>Non-Veg</h3>
+                <p>300+ Recipes</p>
+            </div>
+            <div class="category-card" style="background: linear-gradient(135deg, #D4FC79 0%, #96E6A1 100%);">
+                <i class="fas fa-bread-slice"></i>
+                <h3>Breakfast</h3>
+                <p>150+ Recipes</p>
+            </div>
+            <div class="category-card" style="background: linear-gradient(135deg, #A3BFFA 0%, #6991C7 100%);">
+                <i class="fas fa-ice-cream"></i>
+                <h3>Desserts</h3>
+                <p>200+ Recipes</p>
+            </div>
+            <div class="category-card" style="background: linear-gradient(135deg, #F093FB 0%, #F5576C 100%);">
+                <i class="fas fa-glass-martini-alt"></i>
+                <h3>Drinks</h3>
+                <p>100+ Recipes</p>
+            </div>
+            <div class="category-card" style="background: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%);">
+                <i class="fas fa-fire"></i>
+                <h3>Quick & Easy</h3>
+                <p>220+ Recipes</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about-section" id="about">
+    <div class="container">
+        <div class="section-title">
+            <h2>About FlavorVerse</h2>
+            <p>Our story, mission, and the team behind your favorite recipe app</p>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Our Story</h3>
+                <p>Founded in 2026, FlavorVerse started as a small community of home cooks passionate about sharing recipes. Today, we're a global platform connecting food lovers from around the world.</p>
+                
+                <h3>Our Mission</h3>
+                <p>To make cooking accessible, enjoyable, and educational for everyone. We believe everyone should have access to delicious, healthy recipes regardless of their cooking experience.</p>
+                
+                <h3>What We Offer</h3>
+                <ul class="features-list">
+                    <li><i class="fas fa-check-circle"></i> Thousands of tested recipes</li>
+                    <li><i class="fas fa-check-circle"></i> Step-by-step instructions with videos</li>
+                    <li><i class="fas fa-check-circle"></i> Nutritional information for every recipe</li>
+                    <li><i class="fas fa-check-circle"></i> Personalized recipe recommendations</li>
+                    <li><i class="fas fa-check-circle"></i> Community of passionate cooks</li>
+                    <li><i class="fas fa-check-circle"></i> Cooking tips and techniques</li>
+                </ul>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <h4>100+</h4>
+                        <p>Recipes</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>50K+</h4>
+                        <p>Users</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>50+</h4>
+                        <p>Countries</p>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Chefs cooking together">
+                <div class="image-caption">
+                    
+                </div>
+            </div>
+        </div>
+       
+        </div>
+    </div>
+</section>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <i class="fas fa-utensils"></i> FlavorVerse
+                    </div>
+                    <p>Discover, cook, and share amazing recipes from around the world. Join our community of food lovers and elevate your cooking skills.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#recipes">Recipes</a></li>
+                        <li><a href="#categories">Categories</a></li>
+                       
+                        <li><a href="#about">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h3>Stay Updated</h3>
+                    <p>Subscribe to our newsletter and get the latest recipes and cooking tips delivered to your inbox.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address">
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 FlavorVerse. All rights reserved. | Designed with <i class="fas fa-heart" style="color: var(--primary);"></i> for food lovers</p>
+            </div>
+        </div>
+    </footer>
+
+<script>
+    // DOM Elements
+    const authModal = document.getElementById('authModal');
+    const loginBtn = document.getElementById('loginBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    const closeModal = document.getElementById('closeModal');
+    const exploreRecipesBtn = document.getElementById('exploreRecipes');
+    const joinCommunityBtn = document.getElementById('joinCommunityBtn');
+    const authTabs = document.querySelectorAll('.auth-tab');
+    const authForms = document.querySelectorAll('.auth-form form');
+    const switchLinks = document.querySelectorAll('.switch-link');
+    const forgotLinks = document.querySelectorAll('.forgot-link');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.querySelector('.nav-links');
+    
+    // Open modal functions
+    function openAuthModal(tabName) {
+        authModal.classList.add('active');
+        switchTab(tabName);
+    }
+    
+    // Close modal
+    closeModal.addEventListener('click', () => {
+        authModal.classList.remove('active');
+    });
+    
+    // Close modal when clicking outside
+    authModal.addEventListener('click', (e) => {
+        if (e.target === authModal) {
+            authModal.classList.remove('active');
+        }
+    });
+    
+   
+    function switchTab(tabName) {
+        
+        authTabs.forEach(tab => {
+            if (tab.dataset.tab === tabName) {
+                tab.classList.add('active');
+            } else {
+                tab.classList.remove('active');
+            }
+        });
+        
+       
+        authForms.forEach(form => {
+            if (form.id === `${tabName}Form`) {
+                form.classList.add('active');
+            } else {
+                form.classList.remove('active');
+            }
+        });
+    }
+    
+   
+    authTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            switchTab(tab.dataset.tab);
+        });
+    });
+    
+  
+    switchLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchTab(link.dataset.tab);
+        });
+    });
+    
+    
+    forgotLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            openAuthModal('forgot');
+        });
+    });
+    
+    
+    loginBtn.addEventListener('click', () => openAuthModal('login'));
+    registerBtn.addEventListener('click', () => openAuthModal('register'));
+    exploreRecipesBtn.addEventListener('click', () => {
+        document.querySelector('#recipes').scrollIntoView({ behavior: 'smooth' });
+    });
+    joinCommunityBtn.addEventListener('click', () => openAuthModal('register'));
+    
+    
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username: email, password: password})
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                         alert('login successful!');
+                        window.location.href = "/dashboard";
+                } else {
+                alert('Login failed: ' + data.message);
+            }
+        } catch (error) {
+            alert('netword error');
+        }
+    });
+
+    
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('registerName').value;
+        const email = document.getElementById('registerEmail').value;
+        const password = document.getElementById('registerPassword').value;
+        const confirmPassword = document.getElementById('registerConfirmPassword').value;
+        
+        
+        if (password !== confirmPassword) {
+            alert('password not matched');
+            return;
+        }
+        
+        try {
+            const response = await fetch('/api/register', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    username: email,
+                    email: email,
+                    password: password
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                alert('registration successful! Please login.');
+                switchTab('login');
+            } else {
+                alert('Registration failed: ' + data.message);
+            }
+        } catch (error) {
+            alert('Network error. Please try again.');
+        }
+    });
+
+    
+ document.getElementById('forgotForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('forgotEmail').value;
+
+    try {
+        const response = await fetch('/api/forgot-password', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({email: email})
+        });
+
+        const data = await response.json();
+
+       if (data.success) {
+    alert('6-digit reset code sent! (demo: console check)');
+    
+    // hide forgot form
+    document.getElementById('forgotForm').style.display = 'none';
+
+    // show verify form
+    document.getElementById('verifyForm').style.display = 'block';
+
+    // auto fill email
+    document.getElementById('verifyEmail').value = email;
+}
+ else {
+            alert('Error: ' + data.message);
+        }
+    } catch (error) {
+        alert('Network error. Please try again.');
+    }
+});
+
+window.addEventListener('DOMContentLoaded', function() {
+    checkLoginStatus();
+});
+
+    
+document.getElementById('verifyForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('verifyEmail').value;
+    const code = document.getElementById('resetCode').value;
+    const password = document.getElementById('newPassword').value;
+
+    // Step 1: verify code
+    const verifyRes = await fetch('/api/verify-code', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ email, code })
+    });
+
+    const verifyData = await verifyRes.json();
+    if (!verifyData.success) {
+        alert('Invalid or expired code');
+        return;
+    }
+
+    // Step 2: reset password
+    const resetRes = await fetch('/api/reset-password', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ password })
+    });
+
+    const resetData = await resetRes.json();
+    if (resetData.success) {
+        alert('Password reset successful!');
+        location.reload(); // back to login
+    }
+});
+
+    
+    function checkLoginStatus() {
+        fetch('/api/check-auth')
+            .then(response => response.json())
+            .then(data => {
+                const authButtons = document.querySelector('.auth-buttons');
+                if (data.is_logged_in) {
+                    
+                    authButtons.innerHTML = `
+                        <span style="color: #ff6b6b; margin-right: 15px;">
+                            <i class="fas fa-user"></i> ${data.user.username}
+                        </span>
+                        <button class="btn btn-outline" onclick="window.location.href='/dashboard'">
+                            Dashboard
+                        </button>
+                        <button class="btn btn-primary" onclick="logout()">
+                            Logout
+                        </button>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.log('Error checking login status:', error);
+            });
+    }
+    
+
+
+    // Mobile menu toggle
+    mobileMenuBtn.addEventListener('click', () => {
+        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+    });
+    
+    // Close mobile menu on window resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            navLinks.style.display = '';
+        }
+    });
+    
+    // Add some interactive effects to recipe cards
+    document.querySelectorAll('.recipe-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.querySelector('.recipe-content h3').style.color = 'var(--primary)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.querySelector('.recipe-content h3').style.color = '';
+        });
+    });
+</script>
+</body>
+</html>
