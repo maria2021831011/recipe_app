@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - FlavorVerse</title>
+    <title>FlavorVerse - Recipe Sharing Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
     <style>
@@ -99,6 +99,21 @@
             padding: 20px;
         }
 
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Top Bar */
         .top-bar {
             background: white;
@@ -133,6 +148,7 @@
             flex: 1;
             max-width: 400px;
             margin: 0 30px;
+            position: relative;
         }
 
         .search-bar input {
@@ -190,12 +206,44 @@
             color: var(--dark);
         }
 
-        .stat-content p {
-            color: var(--gray);
-            font-size: 14px;
+        /* Categories Section */
+        .categories-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
         }
 
-        /* Recent Recipes */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .category-item {
+            background: var(--light);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .category-item:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .category-item i {
+            font-size: 24px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Recipes Grid */
         .section-title {
             font-size: 24px;
             margin: 30px 0 20px;
@@ -216,7 +264,7 @@
             margin-bottom: 40px;
         }
 
-        .recipe-card-dash {
+        .recipe-card {
             background: white;
             border-radius: 15px;
             overflow: hidden;
@@ -224,38 +272,50 @@
             transition: var(--transition);
         }
 
-        .recipe-card-dash:hover {
+        .recipe-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.2);
         }
 
-        .recipe-image-dash {
+        .recipe-image {
             height: 180px;
             overflow: hidden;
+            position: relative;
         }
 
-        .recipe-image-dash img {
+        .recipe-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: var(--transition);
         }
 
-        .recipe-card-dash:hover .recipe-image-dash img {
+        .recipe-card:hover .recipe-image img {
             transform: scale(1.05);
         }
 
-        .recipe-content-dash {
+        .recipe-video-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .recipe-content {
             padding: 20px;
         }
 
-        .recipe-content-dash h4 {
+        .recipe-content h4 {
             font-size: 18px;
             margin-bottom: 10px;
             color: var(--dark);
         }
 
-        .recipe-meta-dash {
+        .recipe-meta {
             display: flex;
             justify-content: space-between;
             color: var(--gray);
@@ -263,9 +323,52 @@
             margin-bottom: 15px;
         }
 
+        .recipe-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            background: var(--light);
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            color: var(--gray);
+        }
+
         .recipe-actions {
             display: flex;
             gap: 10px;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
         }
 
         .btn-small {
@@ -291,6 +394,149 @@
         .btn-view {
             background: var(--success);
             color: white;
+        }
+
+        /* Recipe Detail Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 50px auto;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 20px 30px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-video {
+            width: 100%;
+            height: 400px;
+            background: #000;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Forms */
+        .form-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--light-gray);
+            border-radius: 10px;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Settings */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--success);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
         }
 
         /* Activity Feed */
@@ -329,19 +575,6 @@
             color: var(--primary);
         }
 
-        .activity-content {
-            flex: 1;
-        }
-
-        .activity-content p {
-            margin-bottom: 5px;
-        }
-
-        .activity-time {
-            font-size: 12px;
-            color: var(--gray);
-        }
-
         /* Quick Stats */
         .quick-stats {
             display: grid;
@@ -358,10 +591,13 @@
             box-shadow: var(--shadow);
         }
 
-        .stat-box i {
-            font-size: 40px;
-            margin-bottom: 15px;
-            color: var(--primary);
+        /* Search Results */
+        .search-results {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-top: 20px;
         }
 
         /* Footer */
@@ -392,6 +628,10 @@
                 justify-content: center;
                 padding: 15px;
             }
+            
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
@@ -412,6 +652,11 @@
             .recipes-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .modal-content {
+                width: 95%;
+                margin: 20px auto;
+            }
         }
     </style>
 </head>
@@ -421,7 +666,7 @@
         <div class="sidebar">
             <div class="logo">
                 <h2><i class="fas fa-utensils"></i> FlavorVerse</h2>
-                <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Recipe Dashboard</p>
+                <p style="font-size: 12px; color: #ccc; margin-top: 5px;">Recipe Sharing Platform</p>
             </div>
             
             <ul class="nav-menu">
@@ -431,6 +676,14 @@
                 </li>
                 <li class="nav-item" onclick="switchTab('recipes')">
                     <i class="fas fa-utensils"></i>
+                    <span>All Recipes</span>
+                </li>
+                <li class="nav-item" onclick="switchTab('categories')">
+                    <i class="fas fa-list"></i>
+                    <span>Categories</span>
+                </li>
+                <li class="nav-item" onclick="switchTab('my-recipes')">
+                    <i class="fas fa-book"></i>
                     <span>My Recipes</span>
                 </li>
                 <li class="nav-item" onclick="switchTab('favorites')">
@@ -461,278 +714,1013 @@
             <!-- Top Bar -->
             <div class="top-bar">
                 <div class="user-info">
-                    <div class="user-avatar">
+                    <div class="user-avatar" onclick="switchTab('profile')" style="cursor: pointer;">
                         <i class="fas fa-user"></i>
                     </div>
                     <div>
-                        <h3>Welcome, {{ user.username if user else 'Guest' }}!</h3>
-                        <p style="color: var(--gray); font-size: 14px;">Recipe Creator Dashboard</p>
+                        <h3>Welcome, Chef <span id="username">Alex Johnson</span>!</h3>
+                        <p style="color: var(--gray); font-size: 14px;">Master Chef | 125 Recipes</p>
                     </div>
                 </div>
                 
                 <div class="search-bar">
-                    <input type="text" placeholder="Search recipes, ingredients..." id="searchInput">
+                    <input type="text" id="searchInput" placeholder="Search recipes, ingredients, categories...">
+                    <i class="fas fa-search" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--gray);"></i>
                 </div>
                 
                 <div style="display: flex; gap: 10px;">
-                    <button class="btn-small" style="background: var(--primary); color: white;" 
-                            onclick="window.location.href='/'">
+                    <button class="btn btn-primary" onclick="window.location.href='/'">
                         <i class="fas fa-home"></i> Home
                     </button>
-                    <button class="btn-small" style="background: var(--success); color: white;"
-                            onclick="window.location.href='#create'">
+                    <button class="btn btn-success" onclick="switchTab('create')">
                         <i class="fas fa-plus"></i> New Recipe
                     </button>
                 </div>
             </div>
 
-            <!-- Stats Cards -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                        <i class="fas fa-utensils"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3 id="totalRecipes">12</h3>
-                        <p>Total Recipes</p>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3 id="totalFavorites">48</h3>
-                        <p>Recipe Likes</p>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3 id="totalViews">1.2K</h3>
-                        <p>Profile Views</p>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
-                        <i class="fas fa-fire"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3 id="streakDays">7</h3>
-                        <p>Day Streak</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Recent Recipes -->
-            <h2 class="section-title">
-                <i class="fas fa-history"></i> Recent Recipes
-            </h2>
-            
-            <div class="recipes-grid" id="recentRecipes">
-                <!-- Recipe 1 -->
-                <div class="recipe-card-dash">
-                    <div class="recipe-image-dash">
-                        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pasta">
-                    </div>
-                    <div class="recipe-content-dash">
-                        <h4>Creamy Garlic Pasta</h4>
-                        <div class="recipe-meta-dash">
-                            <span><i class="far fa-clock"></i> 25 min</span>
-                            <span><i class="fas fa-user-friends"></i> 2 servings</span>
-                            <span>⭐ 4.8</span>
+            <!-- Dashboard Tab -->
+            <div id="dashboard-tab" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <i class="fas fa-utensils"></i>
                         </div>
-                        <p>Delicious pasta with creamy garlic sauce and fresh herbs.</p>
-                        <div class="recipe-actions">
-                            <button class="btn-small btn-view">View</button>
-                            <button class="btn-small btn-edit">Edit</button>
-                            <button class="btn-small btn-delete">Delete</button>
+                        <div class="stat-content">
+                            <h3 id="totalRecipes">125</h3>
+                            <p>Total Recipes</p>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Recipe 2 -->
-                <div class="recipe-card-dash">
-                    <div class="recipe-image-dash">
-                        <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Salmon">
-                    </div>
-                    <div class="recipe-content-dash">
-                        <h4>Grilled Salmon</h4>
-                        <div class="recipe-meta-dash">
-                            <span><i class="far fa-clock"></i> 30 min</span>
-                            <span><i class="fas fa-user-friends"></i> 2 servings</span>
-                            <span>⭐ 4.9</span>
-                        </div>
-                        <p>Healthy salmon with lemon butter and asparagus.</p>
-                        <div class="recipe-actions">
-                            <button class="btn-small btn-view">View</button>
-                            <button class="btn-small btn-edit">Edit</button>
-                            <button class="btn-small btn-delete">Delete</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Recipe 3 -->
-                <div class="recipe-card-dash">
-                    <div class="recipe-image-dash">
-                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pizza">
-                    </div>
-                    <div class="recipe-content-dash">
-                        <h4>Margherita Pizza</h4>
-                        <div class="recipe-meta-dash">
-                            <span><i class="far fa-clock"></i> 60 min</span>
-                            <span><i class="fas fa-user-friends"></i> 4 servings</span>
-                            <span>⭐ 4.7</span>
-                        </div>
-                        <p>Classic Italian pizza with fresh mozzarella.</p>
-                        <div class="recipe-actions">
-                            <button class="btn-small btn-view">View</button>
-                            <button class="btn-small btn-edit">Edit</button>
-                            <button class="btn-small btn-delete">Delete</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Stats -->
-            <div class="quick-stats">
-                <div class="stat-box">
-                    <i class="fas fa-edit"></i>
-                    <h3>5 Drafts</h3>
-                    <p>Recipes in progress</p>
-                </div>
-                <div class="stat-box">
-                    <i class="fas fa-share-alt"></i>
-                    <h3>24 Shares</h3>
-                    <p>Recipes shared</p>
-                </div>
-                <div class="stat-box">
-                    <i class="fas fa-comments"></i>
-                    <h3>18 Comments</h3>
-                    <p>User feedback</p>
-                </div>
-                <div class="stat-box">
-                    <i class="fas fa-trophy"></i>
-                    <h3>Expert</h3>
-                    <p>Your cooking level</p>
-                </div>
-            </div>
-
-            <!-- Recent Activity -->
-            <h2 class="section-title">
-                <i class="fas fa-bell"></i> Recent Activity
-            </h2>
-            
-            <div class="activity-section">
-                <ul class="activity-list">
-                    <li class="activity-item">
-                        <div class="activity-icon">
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
                             <i class="fas fa-heart"></i>
                         </div>
-                        <div class="activity-content">
-                            <p><strong>John Doe</strong> liked your "Chocolate Cake" recipe</p>
-                            <span class="activity-time">2 hours ago</span>
+                        <div class="stat-content">
+                            <h3 id="totalFavorites">1.2K</h3>
+                            <p>Recipe Likes</p>
                         </div>
-                    </li>
-                    <li class="activity-item">
-                        <div class="activity-icon">
-                            <i class="fas fa-comment"></i>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <i class="fas fa-users"></i>
                         </div>
-                        <div class="activity-content">
-                            <p><strong>Sarah Smith</strong> commented: "Amazing recipe!"</p>
-                            <span class="activity-time">5 hours ago</span>
+                        <div class="stat-content">
+                            <h3 id="totalViews">15.4K</h3>
+                            <p>Profile Views</p>
                         </div>
-                    </li>
-                    <li class="activity-item">
-                        <div class="activity-icon">
-                            <i class="fas fa-share"></i>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                            <i class="fas fa-fire"></i>
                         </div>
-                        <div class="activity-content">
-                            <p>Your "Grilled Salmon" recipe was shared 3 times</p>
-                            <span class="activity-time">1 day ago</span>
+                        <div class="stat-content">
+                            <h3 id="streakDays">42</h3>
+                            <p>Day Streak</p>
                         </div>
-                    </li>
-                    <li class="activity-item">
-                        <div class="activity-icon">
-                            <i class="fas fa-award"></i>
+                    </div>
+                </div>
+
+                <h2 class="section-title">
+                    <i class="fas fa-history"></i> Recent Recipes
+                </h2>
+                
+                <div class="recipes-grid" id="recentRecipes">
+                    <!-- Recipes loaded dynamically -->
+                </div>
+
+                <div class="quick-stats">
+                    <div class="stat-box">
+                        <i class="fas fa-edit"></i>
+                        <h3>8 Drafts</h3>
+                        <p>Recipes in progress</p>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-share-alt"></i>
+                        <h3>247 Shares</h3>
+                        <p>Recipes shared</p>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-comments"></i>
+                        <h3>156 Comments</h3>
+                        <p>User feedback</p>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-trophy"></i>
+                        <h3>Master Chef</h3>
+                        <p>Your cooking level</p>
+                    </div>
+                </div>
+
+                <h2 class="section-title">
+                    <i class="fas fa-bell"></i> Recent Activity
+                </h2>
+                
+                <div class="activity-section">
+                    <ul class="activity-list" id="activityFeed">
+                        <!-- Activity loaded dynamically -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- All Recipes Tab -->
+            <div id="recipes-tab" class="tab-content">
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-filter"></i> Filter Recipes
+                    </h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <select class="form-control" id="categoryFilter">
+                            <option value="">All Categories</option>
+                            <option value="breakfast">Breakfast</option>
+                            <option value="lunch">Lunch</option>
+                            <option value="dinner">Dinner</option>
+                            <option value="dessert">Dessert</option>
+                            <option value="vegetarian">Vegetarian</option>
+                        </select>
+                        <select class="form-control" id="difficultyFilter">
+                            <option value="">All Difficulties</option>
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="hard">Hard</option>
+                        </select>
+                        <input type="number" class="form-control" placeholder="Max time (minutes)" id="timeFilter">
+                        <button class="btn btn-primary" onclick="filterRecipes()">
+                            <i class="fas fa-filter"></i> Apply Filters
+                        </button>
+                    </div>
+                </div>
+                
+                <h2 class="section-title">
+                    <i class="fas fa-utensils"></i> All Recipes
+                </h2>
+                
+                <div class="recipes-grid" id="allRecipes">
+                    <!-- All recipes loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Categories Tab -->
+            <div id="categories-tab" class="tab-content">
+                <div class="categories-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-list"></i> Recipe Categories
+                    </h2>
+                    <p style="color: var(--gray); margin-bottom: 20px;">Browse recipes by category. 100+ recipes available!</p>
+                    
+                    <div class="categories-grid">
+                        <div class="category-item" onclick="filterByCategory('breakfast')">
+                            <i class="fas fa-egg"></i>
+                            <span>Breakfast</span>
                         </div>
-                        <div class="activity-content">
-                            <p>You earned the "Master Chef" badge</p>
-                            <span class="activity-time">2 days ago</span>
+                        <div class="category-item" onclick="filterByCategory('lunch')">
+                            <i class="fas fa-hamburger"></i>
+                            <span>Lunch</span>
                         </div>
-                    </li>
-                </ul>
+                        <div class="category-item" onclick="filterByCategory('dinner')">
+                            <i class="fas fa-drumstick-bite"></i>
+                            <span>Dinner</span>
+                        </div>
+                        <div class="category-item" onclick="filterByCategory('dessert')">
+                            <i class="fas fa-ice-cream"></i>
+                            <span>Dessert</span>
+                        </div>
+                        <div class="category-item" onclick="filterByCategory('vegetarian')">
+                            <i class="fas fa-leaf"></i>
+                            <span>Vegetarian</span>
+                        </div>
+                        <div class="category-item" onclick="filterByCategory('vegan')">
+                            <i class="fas fa-seedling"></i>
+                            <span>Vegan</span>
+                        </div>
+                        <div class="category-item" onclick="filterByCategory('appetizer')">
+                            <i class="fas fa-cheese"></i>
+                            <span>Appetizers</span>
+                        </div>
+                        <div class="category-item" onclick="filterByCategory('drinks')">
+                            <i class="fas fa-cocktail"></i>
+                            <span>Drinks</span>
+                        </div>
+                        <div class="category-item" onclick="filterByCategory('quick')">
+                            <i class="fas fa-bolt"></i>
+                            <span>Quick Meals</span>
+                        </div>
+                        <div class="category-item" onclick="filterByCategory('healthy')">
+                            <i class="fas fa-heartbeat"></i>
+                            <span>Healthy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="section-title">
+                    <i class="fas fa-utensils"></i> Popular in Categories
+                </h2>
+                
+                <div class="recipes-grid" id="categoryRecipes">
+                    <!-- Category recipes loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Create Recipe Tab -->
+            <div id="create-tab" class="tab-content">
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-plus-circle"></i> Create New Recipe
+                    </h2>
+                    
+                    <form id="recipeForm" onsubmit="createRecipe(event)">
+                        <div class="form-group">
+                            <label for="recipeTitle">Recipe Title *</label>
+                            <input type="text" id="recipeTitle" class="form-control" placeholder="e.g., Creamy Garlic Pasta" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="recipeDescription">Description *</label>
+                            <textarea id="recipeDescription" class="form-control" placeholder="Describe your recipe..." required></textarea>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div class="form-group">
+                                <label for="recipeCategory">Category *</label>
+                                <select id="recipeCategory" class="form-control" required>
+                                    <option value="">Select Category</option>
+                                    <option value="breakfast">Breakfast</option>
+                                    <option value="lunch">Lunch</option>
+                                    <option value="dinner">Dinner</option>
+                                    <option value="dessert">Dessert</option>
+                                    <option value="appetizer">Appetizer</option>
+                                    <option value="drinks">Drinks</option>
+                                    <option value="vegetarian">Vegetarian</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="recipeDifficulty">Difficulty *</label>
+                                <select id="recipeDifficulty" class="form-control" required>
+                                    <option value="">Select Difficulty</option>
+                                    <option value="easy">Easy</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="hard">Hard</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+                            <div class="form-group">
+                                <label for="prepTime">Prep Time (minutes) *</label>
+                                <input type="number" id="prepTime" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="cookTime">Cook Time (minutes) *</label>
+                                <input type="number" id="cookTime" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="servings">Servings *</label>
+                                <input type="number" id="servings" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="recipeIngredients">Ingredients * (one per line)</label>
+                            <textarea id="recipeIngredients" class="form-control" placeholder="2 cups flour&#10;1 cup sugar&#10;3 eggs" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="recipeInstructions">Instructions * (step by step)</label>
+                            <textarea id="recipeInstructions" class="form-control" placeholder="Step 1: Mix the dry ingredients&#10;Step 2: Add wet ingredients&#10;Step 3: Bake for 30 minutes" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="recipeVideo">Video URL (Optional)</label>
+                            <input type="url" id="recipeVideo" class="form-control" placeholder="https://youtube.com/watch?v=...">
+                            <small style="color: var(--gray);">Add a YouTube or Vimeo link to show your cooking process</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="recipeImage">Image URL *</label>
+                            <input type="url" id="recipeImage" class="form-control" placeholder="https://example.com/image.jpg" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="recipeTags">Tags (comma separated)</label>
+                            <input type="text" id="recipeTags" class="form-control" placeholder="pasta, italian, creamy, garlic">
+                        </div>
+                        
+                        <div style="display: flex; gap: 15px; margin-top: 30px;">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save"></i> Publish Recipe
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="saveAsDraft()">
+                                <i class="fas fa-file"></i> Save as Draft
+                            </button>
+                            <button type="reset" class="btn">
+                                <i class="fas fa-redo"></i> Reset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Profile Tab -->
+            <div id="profile-tab" class="tab-content">
+                <div class="form-section">
+                    <div style="display: flex; gap: 30px; align-items: center; margin-bottom: 30px;">
+                        <div class="user-avatar" style="width: 100px; height: 100px; font-size: 40px;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h2 style="font-size: 28px;">Alex Johnson</h2>
+                            <p style="color: var(--gray);">Master Chef | Joined March 2023</p>
+                            <p><i class="fas fa-map-marker-alt" style="color: var(--primary); margin-right: 8px;"></i> New York, USA</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-grid" style="margin-bottom: 30px;">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: var(--success);">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>125</h3>
+                                <p>Recipes Created</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: var(--primary);">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>1.2K</h3>
+                                <p>Total Likes</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: var(--info);">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>5.4K</h3>
+                                <p>Followers</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="section-title">
+                        <i class="fas fa-edit"></i> Edit Profile
+                    </h3>
+                    
+                    <form id="profileForm">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div class="form-group">
+                                <label for="profileName">Full Name</label>
+                                <input type="text" id="profileName" class="form-control" value="Alex Johnson">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="profileEmail">Email Address</label>
+                                <input type="email" id="profileEmail" class="form-control" value="alex@example.com">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profileBio">Bio</label>
+                            <textarea id="profileBio" class="form-control" rows="4">Passionate chef specializing in Italian and Mediterranean cuisine. Love sharing recipes with the community!</textarea>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div class="form-group">
+                                <label for="profileLocation">Location</label>
+                                <input type="text" id="profileLocation" class="form-control" value="New York, USA">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="profileWebsite">Website</label>
+                                <input type="url" id="profileWebsite" class="form-control" value="https://alexjohnson.com">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profileInterests">Cooking Interests</label>
+                            <input type="text" id="profileInterests" class="form-control" value="Italian, Mediterranean, Baking, Vegetarian">
+                            <small style="color: var(--gray);">Separate interests with commas</small>
+                        </div>
+                        
+                        <button type="button" class="btn btn-primary" onclick="updateProfile()">
+                            <i class="fas fa-save"></i> Update Profile
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settings-tab" class="tab-content">
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-cog"></i> Account Settings
+                    </h2>
+                    
+                    <div class="settings-grid">
+                        <div>
+                            <h3 style="margin-bottom: 20px;">Notification Settings</h3>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                <span>Email Notifications</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                <span>Recipe Likes</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                <span>New Followers</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                <span>Weekly Digest</span>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 style="margin-bottom: 20px;">Privacy Settings</h3>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                <span>Public Profile</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                <span>Show Email</span>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                <span>Allow Messages</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <h3 style="margin: 30px 0 15px;">Change Password</h3>
+                            
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Current Password">
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="New Password">
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Confirm New Password">
+                            </div>
+                            
+                            <button class="btn btn-primary">
+                                <i class="fas fa-key"></i> Update Password
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--light-gray);">
+                        <h3 style="margin-bottom: 20px;">Danger Zone</h3>
+                        <button class="btn" style="background: #ff3838; color: white;" onclick="deleteAccount()">
+                            <i class="fas fa-trash"></i> Delete Account
+                        </button>
+                        <small style="color: var(--gray); display: block; margin-top: 10px;">This action cannot be undone. All your recipes and data will be permanently deleted.</small>
+                    </div>
+                </div>
             </div>
 
             <!-- Dashboard Footer -->
             <div class="dashboard-footer">
-                <p>&copy; 2024 FlavorVerse Recipe App. All rights reserved.</p>
+                <p>&copy; 2024 FlavorVerse Recipe Sharing Platform. All rights reserved.</p>
                 <p style="margin-top: 5px; font-size: 12px;">
                     <i class="fas fa-fire" style="color: var(--primary);"></i> 
-                    Cooking streak: 7 days | 
+                    Cooking streak: 42 days | 
                     <i class="fas fa-utensils" style="color: var(--success);"></i> 
-                    Recipes created: 12
+                    Recipes created: 125 |
+                    <i class="fas fa-users" style="color: var(--info);"></i>
+                    Active users: 10,452
                 </p>
             </div>
         </div>
     </div>
 
+    <!-- Recipe Detail Modal -->
+    <div id="recipeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalRecipeTitle" style="font-size: 24px;"></h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="modalVideoContainer" class="modal-video">
+                    <!-- Video player will be inserted here -->
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px;">
+                    <div>
+                        <h3 style="margin-bottom: 15px;">Instructions</h3>
+                        <div id="modalInstructions"></div>
+                        
+                        <h3 style="margin: 25px 0 15px;">Ingredients</h3>
+                        <div id="modalIngredients"></div>
+                    </div>
+                    
+                    <div>
+                        <div style="background: var(--light); padding: 20px; border-radius: 10px;">
+                            <h4 style="margin-bottom: 15px;">Recipe Details</h4>
+                            <div id="modalDetails"></div>
+                            
+                            <div style="margin-top: 20px;">
+                                <button class="btn btn-success" style="width: 100%; margin-bottom: 10px;">
+                                    <i class="fas fa-heart"></i> Like Recipe
+                                </button>
+                                <button class="btn btn-primary" style="width: 100%;">
+                                    <i class="fas fa-share"></i> Share Recipe
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // ট্যাব সুইচিং
-        function switchTab(tabName) {
-            // সব ট্যাব ইনঅ্যাকটিভ করুন
+        // Sample Data
+        const sampleRecipes = [
+            {
+                id: 1,
+                title: "Creamy Garlic Pasta",
+                description: "Delicious pasta with creamy garlic sauce and fresh herbs.",
+                image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                category: "dinner",
+                difficulty: "easy",
+                prepTime: 10,
+                cookTime: 15,
+                servings: 2,
+                rating: 4.8,
+                likes: 145,
+                videoUrl: "https://www.youtube.com/embed/example1",
+                ingredients: ["2 cups pasta", "4 cloves garlic", "1 cup heavy cream", "Parmesan cheese", "Fresh parsley"],
+                instructions: ["Cook pasta according to package directions.", "Sauté garlic in butter until fragrant.", "Add heavy cream and bring to simmer.", "Stir in Parmesan until melted.", "Toss pasta in sauce and serve."],
+                tags: ["pasta", "italian", "creamy", "garlic"],
+                author: "Alex Johnson",
+                date: "2024-03-15"
+            },
+            {
+                id: 2,
+                title: "Grilled Salmon",
+                description: "Healthy salmon with lemon butter and asparagus.",
+                image: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                category: "dinner",
+                difficulty: "medium",
+                prepTime: 15,
+                cookTime: 15,
+                servings: 2,
+                rating: 4.9,
+                likes: 203,
+                videoUrl: "https://www.youtube.com/embed/example2",
+                ingredients: ["2 salmon fillets", "1 lemon", "2 tbsp butter", "Asparagus bunch", "Garlic powder"],
+                instructions: ["Season salmon with salt, pepper, and garlic powder.", "Grill for 6-7 minutes per side.", "Melt butter with lemon juice.", "Grill asparagus alongside salmon.", "Serve with lemon butter sauce."],
+                tags: ["salmon", "healthy", "grilled", "seafood"],
+                author: "Alex Johnson",
+                date: "2024-03-10"
+            },
+            {
+                id: 3,
+                title: "Blueberry Pancakes",
+                description: "Fluffy pancakes with fresh blueberries and maple syrup.",
+                image: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                category: "breakfast",
+                difficulty: "easy",
+                prepTime: 10,
+                cookTime: 15,
+                servings: 4,
+                rating: 4.7,
+                likes: 98,
+                videoUrl: "",
+                ingredients: ["2 cups flour", "1 cup milk", "2 eggs", "1 cup blueberries", "Maple syrup"],
+                instructions: ["Mix dry ingredients in bowl.", "Whisk wet ingredients separately.", "Combine until just mixed.", "Fold in blueberries.", "Cook on griddle until golden."],
+                tags: ["breakfast", "pancakes", "sweet", "blueberries"],
+                author: "Alex Johnson",
+                date: "2024-03-05"
+            }
+        ];
+
+        const sampleActivity = [
+            { type: "like", user: "John Doe", recipe: "Chocolate Cake", time: "2 hours ago" },
+            { type: "comment", user: "Sarah Smith", recipe: "Grilled Salmon", time: "5 hours ago" },
+            { type: "follow", user: "Mike Chen", recipe: null, time: "1 day ago" },
+            { type: "share", user: "Emma Wilson", recipe: "Creamy Garlic Pasta", time: "2 days ago" },
+            { type: "badge", user: "System", recipe: "Master Chef", time: "3 days ago" }
+        ];
+
+        // DOM Elements
+        let currentTab = 'dashboard';
+        let currentRecipeView = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboard();
+            setupEventListeners();
+        });
+
+        // Event Listeners
+        function setupEventListeners() {
+            // Search functionality
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch(this.value);
+                }
+            });
+
+            // Tab switching
             document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
+                item.addEventListener('click', function() {
+                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        }
+
+        // Tab Switching
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
             });
             
-            // সিলেক্টেড ট্যাব একটিভ করুন
-            document.querySelector(`.nav-item[onclick*="${tabName}"]`).classList.add('active');
+            // Show selected tab
+            const tabElement = document.getElementById(`${tabName}-tab`);
+            if (tabElement) {
+                tabElement.classList.add('active');
+            }
             
-            // ট্যাব কনটেন্ট লোড করুন (এখানে AJAX কল হবে)
-            loadTabContent(tabName);
+            // Load tab content
+            switch(tabName) {
+                case 'dashboard':
+                    loadDashboard();
+                    break;
+                case 'recipes':
+                    loadAllRecipes();
+                    break;
+                case 'categories':
+                    loadCategories();
+                    break;
+                case 'create':
+                    // Already loaded
+                    break;
+                case 'profile':
+                    loadProfile();
+                    break;
+                case 'settings':
+                    // Already loaded
+                    break;
+            }
         }
-        
-        function loadTabContent(tabName) {
-            // ডেমো মেসেজ
-            alert(`Loading ${tabName} content...`);
+
+        // Load Dashboard
+        function loadDashboard() {
+            // Load recent recipes
+            const recentRecipesContainer = document.getElementById('recentRecipes');
+            recentRecipesContainer.innerHTML = '';
+            
+            sampleRecipes.forEach(recipe => {
+                recentRecipesContainer.appendChild(createRecipeCard(recipe));
+            });
+
+            // Load activity feed
+            const activityFeed = document.getElementById('activityFeed');
+            activityFeed.innerHTML = '';
+            
+            sampleActivity.forEach(activity => {
+                const activityItem = document.createElement('li');
+                activityItem.className = 'activity-item';
+                
+                let icon, content;
+                switch(activity.type) {
+                    case 'like':
+                        icon = 'fas fa-heart';
+                        content = `<strong>${activity.user}</strong> liked your "${activity.recipe}" recipe`;
+                        break;
+                    case 'comment':
+                        icon = 'fas fa-comment';
+                        content = `<strong>${activity.user}</strong> commented on "${activity.recipe}"`;
+                        break;
+                    case 'follow':
+                        icon = 'fas fa-user-plus';
+                        content = `<strong>${activity.user}</strong> started following you`;
+                        break;
+                    case 'share':
+                        icon = 'fas fa-share';
+                        content = `Your "${activity.recipe}" recipe was shared by ${activity.user}`;
+                        break;
+                    case 'badge':
+                        icon = 'fas fa-award';
+                        content = `You earned the "${activity.recipe}" badge`;
+                        break;
+                }
+                
+                activityItem.innerHTML = `
+                    <div class="activity-icon">
+                        <i class="${icon}"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p>${content}</p>
+                        <span class="activity-time">${activity.time}</span>
+                    </div>
+                `;
+                
+                activityFeed.appendChild(activityItem);
+            });
         }
-        
-        // লগআউট ফাংশন
+
+        // Load All Recipes
+        function loadAllRecipes() {
+            const container = document.getElementById('allRecipes');
+            container.innerHTML = '';
+            
+            // In a real app, this would be an API call
+            const allRecipes = [...sampleRecipes, ...sampleRecipes]; // Duplicate for demo
+            
+            allRecipes.forEach(recipe => {
+                container.appendChild(createRecipeCard(recipe));
+            });
+        }
+
+        // Load Categories
+        function loadCategories() {
+            const container = document.getElementById('categoryRecipes');
+            container.innerHTML = '';
+            
+            sampleRecipes.forEach(recipe => {
+                container.appendChild(createRecipeCard(recipe));
+            });
+        }
+
+        // Load Profile
+        function loadProfile() {
+            // Profile data would be loaded from API
+            console.log('Loading profile data...');
+        }
+
+        // Create Recipe Card Element
+        function createRecipeCard(recipe) {
+            const card = document.createElement('div');
+            card.className = 'recipe-card';
+            card.dataset.id = recipe.id;
+            card.dataset.category = recipe.category;
+            card.dataset.difficulty = recipe.difficulty;
+            card.dataset.time = recipe.prepTime + recipe.cookTime;
+            
+            const hasVideo = recipe.videoUrl ? '<div class="recipe-video-icon"><i class="fas fa-play"></i> Video</div>' : '';
+            
+            card.innerHTML = `
+                <div class="recipe-image">
+                    <img src="${recipe.image}" alt="${recipe.title}">
+                    ${hasVideo}
+                </div>
+                <div class="recipe-content">
+                    <h4>${recipe.title}</h4>
+                    <div class="recipe-meta">
+                        <span><i class="far fa-clock"></i> ${recipe.prepTime + recipe.cookTime} min</span>
+                        <span><i class="fas fa-user-friends"></i> ${recipe.servings} servings</span>
+                        <span>⭐ ${recipe.rating}</span>
+                    </div>
+                    <p>${recipe.description}</p>
+                    <div class="recipe-tags">
+                        ${recipe.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <div class="recipe-actions">
+                        <button class="btn-small btn-view" onclick="viewRecipe(${recipe.id})">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                        <button class="btn-small btn-edit" onclick="editRecipe(${recipe.id})">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="btn-small btn-delete" onclick="deleteRecipe(${recipe.id})">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // View Recipe Details
+        function viewRecipe(recipeId) {
+            const recipe = sampleRecipes.find(r => r.id === recipeId);
+            if (!recipe) return;
+            
+            currentRecipeView = recipe;
+            
+            // Update modal content
+            document.getElementById('modalRecipeTitle').textContent = recipe.title;
+            
+            // Video or image
+            const videoContainer = document.getElementById('modalVideoContainer');
+            if (recipe.videoUrl) {
+                videoContainer.innerHTML = `
+                    <iframe width="100%" height="100%" src="${recipe.videoUrl}" 
+                            frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
+                            encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                    </iframe>
+                `;
+            } else {
+                videoContainer.innerHTML = `
+                    <img src="${recipe.image}" alt="${recipe.title}" style="width: 100%; height: 100%; object-fit: cover;">
+                `;
+            }
+            
+            // Ingredients
+            const ingredientsList = document.getElementById('modalIngredients');
+            ingredientsList.innerHTML = `
+                <ul style="padding-left: 20px;">
+                    ${recipe.ingredients.map(ing => `<li>${ing}</li>`).join('')}
+                </ul>
+            `;
+            
+            // Instructions
+            const instructionsList = document.getElementById('modalInstructions');
+            instructionsList.innerHTML = `
+                <ol style="padding-left: 20px;">
+                    ${recipe.instructions.map((inst, i) => `<li>${inst}</li>`).join('')}
+                </ol>
+            `;
+            
+            // Details
+            const details = document.getElementById('modalDetails');
+            details.innerHTML = `
+                <p><strong>Category:</strong> ${recipe.category.charAt(0).toUpperCase() + recipe.category.slice(1)}</p>
+                <p><strong>Difficulty:</strong> ${recipe.difficulty.charAt(0).toUpperCase() + recipe.difficulty.slice(1)}</p>
+                <p><strong>Prep Time:</strong> ${recipe.prepTime} minutes</p>
+                <p><strong>Cook Time:</strong> ${recipe.cookTime} minutes</p>
+                <p><strong>Servings:</strong> ${recipe.servings}</p>
+                <p><strong>Author:</strong> ${recipe.author}</p>
+                <p><strong>Date:</strong> ${recipe.date}</p>
+            `;
+            
+            // Show modal
+            document.getElementById('recipeModal').style.display = 'block';
+        }
+
+        // Close Modal
+        function closeModal() {
+            document.getElementById('recipeModal').style.display = 'none';
+        }
+
+        // Create New Recipe
+        function createRecipe(event) {
+            event.preventDefault();
+            
+            const recipeData = {
+                title: document.getElementById('recipeTitle').value,
+                description: document.getElementById('recipeDescription').value,
+                category: document.getElementById('recipeCategory').value,
+                difficulty: document.getElementById('recipeDifficulty').value,
+                prepTime: parseInt(document.getElementById('prepTime').value),
+                cookTime: parseInt(document.getElementById('cookTime').value),
+                servings: parseInt(document.getElementById('servings').value),
+                ingredients: document.getElementById('recipeIngredients').value.split('\n'),
+                instructions: document.getElementById('recipeInstructions').value.split('\n'),
+                videoUrl: document.getElementById('recipeVideo').value,
+                image: document.getElementById('recipeImage').value,
+                tags: document.getElementById('recipeTags').value.split(',').map(tag => tag.trim()),
+                rating: 0,
+                likes: 0,
+                author: "Alex Johnson",
+                date: new Date().toISOString().split('T')[0]
+            };
+            
+            // In a real app, send to API
+            console.log('Creating recipe:', recipeData);
+            
+            alert('Recipe created successfully!');
+            document.getElementById('recipeForm').reset();
+            
+            // Add to recent recipes
+            const newRecipe = {
+                id: sampleRecipes.length + 1,
+                ...recipeData
+            };
+            
+            sampleRecipes.unshift(newRecipe);
+            loadDashboard();
+            switchTab('dashboard');
+        }
+
+        // Save as Draft
+        function saveAsDraft() {
+            alert('Recipe saved as draft!');
+            // In real app, save to drafts
+        }
+
+        // Edit Recipe
+        function editRecipe(recipeId) {
+            alert(`Editing recipe ${recipeId}`);
+            // In real app, load recipe data into form
+            switchTab('create');
+        }
+
+        // Delete Recipe
+        function deleteRecipe(recipeId) {
+            if (confirm('Are you sure you want to delete this recipe?')) {
+                // In real app, delete from API
+                alert(`Recipe ${recipeId} deleted`);
+                // Refresh recipes
+                if (currentTab === 'dashboard') {
+                    loadDashboard();
+                } else if (currentTab === 'recipes') {
+                    loadAllRecipes();
+                }
+            }
+        }
+
+        // Update Profile
+        function updateProfile() {
+            alert('Profile updated successfully!');
+            // In real app, send to API
+        }
+
+        // Delete Account
+        function deleteAccount() {
+            if (confirm('Are you sure you want to delete your account? This cannot be undone!')) {
+                alert('Account deletion requested. Please check your email to confirm.');
+                // In real app, initiate account deletion
+            }
+        }
+
+        // Filter Recipes
+        function filterRecipes() {
+            const category = document.getElementById('categoryFilter').value;
+            const difficulty = document.getElementById('difficultyFilter').value;
+            const maxTime = document.getElementById('timeFilter').value;
+            
+            // In real app, this would be an API call with filters
+            alert(`Filtering by: Category=${category}, Difficulty=${difficulty}, Max Time=${maxTime}min`);
+        }
+
+        // Filter by Category
+        function filterByCategory(category) {
+            document.getElementById('categoryFilter').value = category;
+            filterRecipes();
+            switchTab('recipes');
+        }
+
+        // Perform Search
+        function performSearch(query) {
+            if (query.trim()) {
+                alert(`Searching for: ${query}`);
+                // In real app, this would be an API call
+                // Show search results
+            }
+        }
+
+        // Logout
         function logout() {
-            if(confirm('Are you sure you want to logout?')) {
+            if (confirm('Are you sure you want to logout?')) {
                 window.location.href = '/logout';
             }
         }
-        
-        // সার্চ ফাংশন
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if(e.key === 'Enter') {
-                const query = this.value;
-                if(query.trim()) {
-                    alert(`Searching for: ${query}`);
-                    // এখানে AJAX সার্চ কল হবে
-                }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('recipeModal');
+            if (event.target === modal) {
+                closeModal();
             }
-        });
-        
-        
-        // ড্যাশবোর্ড ডাটা লোড
-        window.onload = function() {
-            // রিয়েল অ্যাপে এখানে API কল হবে
-            console.log('Dashboard loaded for user:', '{{ user.username if user else "Guest" }}');
-            
-            // ডেমো ডাটা আপডেট
-            setTimeout(() => {
-                document.getElementById('totalRecipes').textContent = '15';
-                document.getElementById('totalFavorites').textContent = '52';
-                document.getElementById('totalViews').textContent = '1.5K';
-                document.getElementById('streakDays').textContent = '8';
-            }, 1000);
         };
     </script>
 </body>
